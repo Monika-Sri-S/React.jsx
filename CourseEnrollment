@@ -1,0 +1,44 @@
+Course.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import CourseApp from "./CourseApp";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <CourseApp />
+  </React.StrictMode>
+);
+
+App.jsx
+import { useState } from "react";
+
+export default function CourseApp() {
+  const [course, setCourse] = useState("");
+  const [courses, setCourses] = useState([]);
+
+  const enroll = () => {
+    if (course) {
+      setCourses([...courses, course]);
+      setCourse("");
+    }
+  };
+
+  return (
+    <div>
+      <h2>Course Enrollment</h2>
+      <input
+        value={course}
+        onChange={(e) => setCourse(e.target.value)}
+        placeholder="Course name"
+      />
+      <button onClick={enroll}>Enroll</button>
+
+      <h3>Enrolled Courses</h3>
+      <ul>
+        {courses.map((c, i) => (
+          <li key={i}>{c}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}

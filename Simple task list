@@ -1,1 +1,176 @@
+App.css
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f0f2f5;
+}
+
+.container {
+  max-width: 520px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+/* INPUT SECTION */
+.input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 8px;
+}
+
+/* DEFAULT BUTTON */
+button {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+
+/* ADD BUTTON COLOR */
+.input-section button {
+  background-color: #007bff; /* BLUE */
+}
+
+.input-section button:hover {
+  background-color: #0056b3;
+}
+
+/* TASK LIST */
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.icons {
+  display: flex;
+  gap: 8px;
+}
+
+/* TICK BUTTON */
+.tick-btn {
+  background-color: #28a745;
+  font-size: 16px;
+}
+
+/* CROSS BUTTON */
+.cross-btn {
+  background-color: #dc3545;
+  font-size: 16px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+}
+
+App.jsx
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
+
+  const addTask = () => {
+    if (newTask.trim() === "") return;
+
+    setTasks([
+      ...tasks,
+      { id: Date.now(), text: newTask, completed: false }
+    ]);
+    setNewTask("");
+  };
+
+  const toggleTask = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id
+          ? { ...task, completed: !task.completed }
+          : task
+      )
+    );
+  };
+
+  const removeTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  return (
+    <div className="container">
+      <h1>Task List Dashboard</h1>
+
+      <div className="input-section">
+        <input
+          type="text"
+          placeholder="Enter a task..."
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button onClick={addTask}>Add</button>
+      </div>
+
+      <ul className="task-list">
+        {tasks.length === 0 && (
+          <p className="empty">No tasks added yet</p>
+        )}
+
+        {tasks.map((task) => (
+          <li key={task.id} className="task-item">
+            <span
+              className={task.completed ? "done" : ""}
+            >
+              {task.text}
+            </span>
+
+            <div className="icons">
+              {/* Tick symbol */}
+              <button
+                className="tick-btn"
+                onClick={() => toggleTask(task.id)}
+              >
+                &#10003;
+              </button>
+
+              {/* Wrong / cross symbol */}
+              <button
+                className="cross-btn"
+                onClick={() => removeTask(task.id)}
+              >
+                &times;
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
 

@@ -1,1 +1,105 @@
+App.css
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 400px;
+}
+
+h1 {
+  color: #00796b;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004d40;
+}
+
+p {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #555;
+}
+
+App.jsx
+import React from "react";
+import "./app.css";
+
+function App() {
+  const bookCab = () => {
+    alert("Welcome to the Online Cab Booking System!");
+
+    const name = prompt("Enter your full name:");
+    if (!name) {
+      alert("Booking canceled. Name is required.");
+      return;
+    }
+
+    const pickup = prompt("Enter pickup location:");
+    if (!pickup) {
+      alert("Booking canceled. Pickup location is required.");
+      return;
+    }
+
+    const drop = prompt("Enter drop location:");
+    if (!drop) {
+      alert("Booking canceled. Drop location is required.");
+      return;
+    }
+
+    const carType = prompt(
+      "Enter car type (Sedan, SUV, Hatchback):",
+      "Sedan"
+    );
+    if (!carType) {
+      alert("Booking canceled. Car type is required.");
+      return;
+    }
+
+    const confirmBooking = window.confirm(
+      `Please confirm your cab booking:\n\nName: ${name}\nPickup: ${pickup}\nDrop: ${drop}\nCar Type: ${carType}`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `Thank you ${name}! Your ${carType} cab from ${pickup} to ${drop} is booked successfully.`
+      );
+    } else {
+      alert("Booking canceled.");
+    }
+  };
+
+  return (
+    <div className="container">
+      <h1>Online Cab Booking</h1>
+      <button onClick={bookCab}>Book Cab</button>
+    </div>
+  );
+}
+
+export default App;
 
